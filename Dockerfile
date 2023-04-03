@@ -1,6 +1,9 @@
-FROM devhub-docker.cisco.com/iox-docker/ir800/base-rootfs
+    FROM gcc:latest
 
-COPY apps /opt/apps/
-RUN opkg update
-CMD ["/opt/apps/loop_app"]
+    COPY . /DockerWorld
 
+    WORKDIR /DockerWorld/
+
+    RUN gcc -o DockerWorld dockerworld.c
+
+    CMD [“./DockerWorld”]
