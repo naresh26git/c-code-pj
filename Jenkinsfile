@@ -19,4 +19,13 @@ node{
             -D sonar.host.url=http://180.151.249.202:9000/"""
         }
     }
+    stage('Build Docker Images'){
+   sh 'docker build -t comdevops/c-project:v1 .'
+   }
+   stage('Docker Image Push'){
+   withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
+   sh "docker login -u comdevops -p ${dockerPassword}"
+    }
+   sh 'docker push comdevops/c-project:v1'
+   }
 }
